@@ -25,9 +25,10 @@ SECRET_KEY = 'django-insecure-4ju2n@$f9d0c=h)_g0lbb%k9&@rf(xa$d$g$&5ri$uf)*gev^4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ["REPLIT_DOMAINS"].split(',')
+ALLOWED_HOSTS = os.environ.get("REPLIT_DOMAINS", "127.0.0.1,localhost").split(',')
+ALLOWED_HOSTS.append('*')
 CSRF_TRUSTED_ORIGINS = [
-    "https://" + domain for domain in os.environ["REPLIT_DOMAINS"].split(',')
+    "https://" + domain for domain in os.environ.get("REPLIT_DOMAINS", "").split(',') if domain
 ]
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tasks.apps.TasksConfig',
 ]
 
 MIDDLEWARE = [
